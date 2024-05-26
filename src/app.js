@@ -22,14 +22,15 @@ app.get('/ping', async (req, res) => {
 
 app.get('/crear', async (req, res) => {
     try {
-      const [result] = await pool.query('INSERT INTO users (name) VALUES ("JUANcito") ');
-      console.log(result[0]);
-      res.json(result[0]);
+      const [result] = await pool.query('INSERT INTO users (name) VALUES ("JUANcito")');
+      console.log(result); // Use result instead of result[0]
+      res.json(result); // Use result instead of result[0]
     } catch (error) {
       console.error('Error ejecutando la consulta:', error);
-      res.status(500).json({ error: 'Error ejecutando la consulta' });
+      res.status(500).json({ error: 'Error ejecutando1 la consulta' });
     }
   });
+  
 
 app.listen(PORT, () => {
   console.log('Server on port', PORT);
