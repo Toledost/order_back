@@ -20,6 +20,17 @@ app.get('/ping', async (req, res) => {
   }
 });
 
+app.get('/crear2', async (req, res) => {
+    try {
+      const [result] = await pool.query("INSERT INTO users (name) VALUES ('JUANcito');");
+      console.log(result[0]);
+      res.json(result[0]);
+    } catch (error) {
+      console.error('Error ejecutando la consulta:', error);
+      res.status(500).json({ error: 'Error ejecutando la consulta' });
+    }
+  });
+
 app.get('/crear', async (req, res) => {
     try {
       const [result] = await pool.query('INSERT INTO users (name) VALUES ("JUANcito")');
