@@ -1,6 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 node_modules
 =======
+=======
+>>>>>>> f9ddf5e0832853bbf9cc5254e15ae4ef67cf2550
 # These are some examples of commonly ignored file patterns.
 # You should customize this list as applicable to your project.
 # Learn more about .gitignore:
@@ -51,4 +54,7 @@ Thumbs.db
 *.mov
 *.wmv
 
+<<<<<<< HEAD
 >>>>>>> 8c064e5e5c824610cedc2366ca1df7b6d3942e9a
+=======
+>>>>>>> f9ddf5e0832853bbf9cc5254e15ae4ef67cf2550
