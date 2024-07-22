@@ -26,7 +26,7 @@ app.get('/ping', async (req, res) => {
 
 app.get('/productos', async (req, res) => {
   try {
-    const [result] = await pool.query('SELECT * FROM users');
+    const [result] = await pool.query('SELECT id idProducto, nombre nombreProducto, descripcion FROM productos;');
     console.log(result[0]);
     res.json(result[0]);
   } catch (error) {
