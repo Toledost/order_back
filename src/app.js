@@ -24,6 +24,17 @@ app.get('/ping', async (req, res) => {
   }
 });
 
+app.get('/productos', async (req, res) => {
+  try {
+    const [result] = await pool.query('SELECT * FROM users');
+    console.log(result[0]);
+    res.json(result[0]);
+  } catch (error) {
+    console.error('Error ejecutando la consulta:', error);
+    res.status(500).json({ error: 'Error ejecutando la consulta' });
+  }
+});
+
 app.post('/crear2', async (req, res) => {
     try {
       const [result] = await pool.query("INSERT INTO users (name) VALUES ('nombre prueba2');");
@@ -46,27 +57,7 @@ app.get('/crear', async (req, res) => {
     }
   });
   
-  // app.post('/users/account/name/', async (req, res) => {
-  //   try {
-  //     const {
-  //       nombre,
-  //       // password
-  //     } = req.body;
-  //     const [result] = await pool.query('SELECT name FROM users');
-  //     // if (result.name)
-  //     // console.log(req.query.nombre)
-  //     // console.log(result.map((usuario) => usuario.name == req.query.nombre )); // Use result instead of result[0]
-  //     // res.json(result); // Use result instead of result[0]
-  //     if (result.length > 0) {
-  //       res.json({ usuarioLogueado: true });
-  //     } else {
-  //       res.json({ usuarioLogueado: false });
-  //     }
-  //   } catch (error) {
-  //     console.error('Error ejecutando la consulta:', error);
-  //     res.status(500).json({ error: 'Error ejecutando1 la consulta' });
-  //   }
-  // });
+
 
   app.post('/users/account/name', async (req, res) => {
     try {
