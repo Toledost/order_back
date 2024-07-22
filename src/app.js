@@ -18,7 +18,6 @@ app.get('/ping', async (req, res) => {
     const [result] = await pool.query('SELECT * FROM users');
     console.log(result[0]);
     res.json(result[0]);
-    res.json(result[0]);
   } catch (error) {
     console.error('Error ejecutando la consulta:', error);
     res.status(500).json({ error: 'Error ejecutando la consulta' });
@@ -29,7 +28,7 @@ app.get('/productos', async (req, res) => {
   try {
     const result = await pool.query('SELECT id idProducto, nombre nombreProducto, descripcion FROM productos;');
     console.log(result);
-    res.json(result);
+    res.json(result[0]);
   } catch (error) {
     console.error('Error ejecutando la consulta:', error);
     res.status(500).json({ error: 'Error ejecutando la consulta' });
