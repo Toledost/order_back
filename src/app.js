@@ -13,7 +13,7 @@ app.get("/", async (req, res) => {
   res.json(rows);
 });
 
-app.get("/ping", async (req, res) => {
+app.get("/usuarios", async (req, res) => {
   try {
     const [result] = await pool.query("SELECT * FROM users");
     res.json(result[0]);
@@ -23,6 +23,7 @@ app.get("/ping", async (req, res) => {
   }
 });
 
+// getProductos
 app.get("/productos", async (req, res) => {
   try {
     const result = await pool.query(
@@ -35,10 +36,13 @@ app.get("/productos", async (req, res) => {
   }
 });
 
-app.post("/crear2", async (req, res) => {
+// addProductos
+app.post("/productos", async (req, res) => {
+  const { nombre, precio, descripcion } = req.body;
   try {
     const [result] = await pool.query(
-      "INSERT INTO users (name) VALUES ('nombre prueba2');"
+      "INSERT INTO productos (nombre, precio, descripcion) VALUES (?, ?, ?)",
+      [nombre, precio, descripcion]
     );
     res.json(result);
   } catch (error) {
