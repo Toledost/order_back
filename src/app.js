@@ -41,7 +41,7 @@ app.post("/productos", async (req, res) => {
   const { nombre, precio, descripcion } = req.body;
   try {
     const [result] = await pool.query(
-      "INSERT INTO usersdb.productos (nombre, precio, descripcion) VALUES (?, ?, ?);",
+      "INSERT INTO productos (nombre, precio, descripcion) VALUES (?, ?, ?);",
       [nombre, precio, descripcion]
     );
     res.json(result);
