@@ -40,11 +40,11 @@ app.get("/productos", async (req, res) => {
 
 // addProductos
 app.post("/productos", async (req, res) => {
-  const { nombre, precio, descripcion } = req.body;
+  const { nombreProducto, precio, descripcion } = req.body;
   try {
     const [result] = await pool.query(
       "INSERT INTO productos (nombre, precio, descripcion) VALUES (?, ?, ?);",
-      [nombre, precio, descripcion]
+      [nombreProducto, precio, descripcion]
     );
     res.json(result);
   } catch (error) {
