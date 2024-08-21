@@ -29,7 +29,7 @@ app.get("/usuarios", async (req, res) => {
 app.get("/productos", async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT id idProducto, nombre nombreProducto, precio, descripcion FROM productos;"
+      "SELECT id idProducto, nombre, precio, descripcion FROM productos;"
     );
     res.json(result[0]);
   } catch (error) {
@@ -40,11 +40,11 @@ app.get("/productos", async (req, res) => {
 
 // addProductos
 app.post("/productos", async (req, res) => {
-  const { nombreProducto, precio, descripcion } = req.body;
+  const { nombre, precio, descripcion } = req.body;
   try {
     const [result] = await pool.query(
       "INSERT INTO productos (nombre, precio, descripcion) VALUES (?, ?, ?);",
-      [nombreProducto, precio, descripcion]
+      [nombre, precio, descripcion]
     );
     res.json(result);
   } catch (error) {
