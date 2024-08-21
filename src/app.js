@@ -23,6 +23,8 @@ app.get("/usuarios", async (req, res) => {
   }
 });
 
+/************************** ABMC Productos **********************************/
+
 // getProductos
 app.get("/productos", async (req, res) => {
   try {
@@ -45,6 +47,24 @@ app.post("/productos", async (req, res) => {
       [nombre, precio, descripcion]
     );
     res.json(result);
+  } catch (error) {
+    console.error("Error ejecutando la consulta:", error);
+    res.status(500).json({ error: "Error ejecutando la consulta" });
+  }
+});
+
+// deleteProductos
+app.delete("/productos/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [result] = await pool.query("DELETE FROM productos WHERE id = ?", [
+      id,
+    ]);
+    if (result.affectedRows === 0) {
+      res.status(404).json({ error: "Producto no encontrado" });
+    } else {
+      res.json({ mensaje: "Producto eliminado con éxito" });
+    }
   } catch (error) {
     console.error("Error ejecutando la consulta:", error);
     res.status(500).json({ error: "Error ejecutando la consulta" });
