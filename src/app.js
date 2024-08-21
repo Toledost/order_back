@@ -71,6 +71,26 @@ app.delete("/productos/:id", async (req, res) => {
   }
 });
 
+// updateProducto
+app.put("/productos/:id", async (req, res) => {
+  const { idProducto } = req.params;
+  const { nombre, precio, descripcion } = req.body;
+  try {
+    const [result] = await pool.query(
+      "UPDATE productos SET nombre = ?, precio = ?, descripcion = ? WHERE id = ?",
+      [nombre, precio, descripcion, idProducto]
+    );
+    if (result.affectedRows === 0) {
+      res.status(404).json({ error: "Producto no encontrado" });
+    } else {
+      res.json({ mensaje: "Producto actualizado con éxito" });
+    }
+  } catch (error) {
+    console.error("Error ejecutando la consulta:", error);
+    res.status(500).json({ error: "Error ejecutando la consulta" });
+  }
+});
+
 app.get("/crear", async (req, res) => {
   try {
     const [result] = await pool.query(
