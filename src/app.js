@@ -73,8 +73,8 @@ app.delete("/productos/:id", async (req, res) => {
 
 // updateProducto
 app.put("/productos/:id", async (req, res) => {
-  const { idProducto } = req.params;
-  const { nombre, precio, descripcion } = req.body;
+  // const { idProducto } = req.params;
+  const { nombre, precio, descripcion, idProducto } = req.body;
   try {
     const [result] = await pool.query(
       "UPDATE productos SET nombre = ?, precio = ?, descripcion = ? WHERE id = ?",
