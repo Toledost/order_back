@@ -72,7 +72,7 @@ app.delete("/productos/:id", async (req, res) => {
 });
 
 // updateProducto
-app.put("/productos/:id", async (req, res) => {
+app.put("/productos/:idProducto", async (req, res) => {
   console.log(req.params);
   console.log(req.body);
   const { idProducto } = req.params;
