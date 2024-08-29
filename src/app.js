@@ -97,7 +97,7 @@ app.put("/productos/:idProducto", async (req, res) => {
 app.get("/locales", async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT id idLocal, nombre, direccion, capacidad, telefono, horario_apertura horaApertura, horario_cierre FROM local;"
+      "SELECT id idLocal, nombre, direccion, capacidad, telefono, horario_apertura horaApertura, horario_cierre horaCierre FROM local;"
     );
     res.json(result[0]);
   } catch (error) {
