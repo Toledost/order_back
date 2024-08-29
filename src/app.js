@@ -91,6 +91,24 @@ app.put("/productos/:idProducto", async (req, res) => {
   }
 });
 
+/************************** ABMC Productos **********************************/
+
+// getLocales
+app.get("/locales", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT id idLocal, nombre, direccion, capacidad, telefono, hora_apertura horaApertura, hora_cierre FROM local;"
+    );
+    res.json(result[0]);
+  } catch (error) {
+    console.error("Error ejecutando la consulta:", error);
+    res.status(500).json({ error: "Error ejecutando la consulta" });
+  }
+});
+// addLocales
+// deleteLocales
+// updateLocales
+
 app.get("/crear", async (req, res) => {
   try {
     const [result] = await pool.query(
