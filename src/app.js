@@ -105,7 +105,22 @@ app.get("/locales", async (req, res) => {
     res.status(500).json({ error: "Error ejecutando la consulta" });
   }
 });
+
 // addLocales
+app.post("/locales", async (req, res) => {
+  const { nombre, direccion, telefono, capacidad, horaApertura, horaCierre } =
+    req.body;
+  try {
+    const [result] = await pool.query(
+      "INSERT INTO local (nombre, direccion, telefono, capacidad, horaApertura, horaCierre ) VALUES (?, ?, ?, ?, CAST( ? AS TIME), CAST( ? AS TIME));",
+      [nombre, direccion, telefono, capacidad, horaApertura, horaCierre]
+    );
+    res.json(result);
+  } catch (error) {
+    console.error("Error ejecutando la consulta:", error);
+    res.status(500).json({ error: "Error ejecutando la consulta" });
+  }
+});
 // deleteLocales
 // updateLocales
 
