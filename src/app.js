@@ -108,13 +108,15 @@ app.get("/locales", async (req, res) => {
 
 // addLocales
 app.post("/locales", async (req, res) => {
-  const { nombre, direccion, telefono, capacidad, horaApertura, horaCierre } =
-    req.body;
+  // const { nombre, direccion, telefono, capacidad, horaApertura, horaCierre } =
+  const { nombre, direccion, telefono, capacidad } = req.body;
   try {
     const [result] = await pool.query(
       // "INSERT INTO local (nombre, direccion, telefono, capacidad, horaApertura, horaCierre ) VALUES (?, ?, ?, ?, CAST( ? AS TIME), CAST( ? AS TIME));",
-      "INSERT INTO local (nombre, direccion, telefono, capacidad, horaApertura, horaCierre ) VALUES (?, ?, ?, ?, ?, ?);",
-      [nombre, direccion, telefono, capacidad, horaApertura, horaCierre]
+      // "INSERT INTO local (nombre, direccion, telefono, capacidad, horaApertura, horaCierre ) VALUES (?, ?, ?, ?, ?, ?);",
+      "INSERT INTO local (nombre, direccion, telefono, capacidad ) VALUES (?, ?, ?, ?);",
+      // [nombre, direccion, telefono, capacidad, horaApertura, horaCierre]
+      [nombre, direccion, telefono, capacidad]
     );
     res.json(result);
   } catch (error) {
