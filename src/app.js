@@ -91,6 +91,79 @@ app.put("/productos/:idProducto", async (req, res) => {
   }
 });
 
+
+/************************** ABMC Promociones **********************************/
+
+//getPromociones
+app.get("/promociones", async (req, res) => {
+  try {
+    const result = await pool.query(
+    `SELECT promocion.id as id, promocion.nombre as nombre, promocion.descuento as descuento, promocion.idProducto as idProducto, 
+      productos.nombre as nombreProducto, productos.precio as precioProducto FROM Promocion 
+      JOIN productos ON Promocion.idProducto = productos.id;`
+    )
+    res.json(result[0]);
+    console.log(result[0])
+  } catch (error) {
+    console.error("Error ejecutando la consulta:", error);
+    res.status(500).json({ error: "Error ejecutando la consulta" });
+  }
+})
+
+// addPromocion
+app.post("/promociones", async (req, res) => {
+  const { nombre, descuento, idProducto } = req.body;
+  try {
+    const [result] = await pool.query(
+      "INSERT INTO Promocion (nombre, descuento, idProducto) VALUES (?, ?, ?);",
+      [nombre, descuento, idProducto]
+    );
+    res.json(result);
+  } catch (error) {
+    console.error("Error ejecutando la consulta:", error);
+    res.status(500).json({ error: "Error ejecutando la consulta" });
+  }
+});
+
+// deletePromociones
+app.delete("/promociones/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [result] = await pool.query("DELETE FROM Promocion WHERE id = ?", [
+      id,
+    ]);
+    if (result.affectedRows === 0) {
+      res.status(404).json({ error: "Promoción no encontrada" });
+    } else {
+      res.json({ mensaje: "Promoción eliminada con éxito" });
+    }
+  } catch (error) {
+    console.error("Error ejecutando la consulta:", error);
+    res.status(500).json({ error: "Error ejecutando la consulta" });
+  }
+});
+
+// updatePromocion
+app.put("/promociones/:idPromocion", async (req, res) => {
+  const { idPromocion } = req.params;
+  const { nombre, descuento, idProducto } = req.body;
+  try {
+    const [result] = await pool.query(
+      "UPDATE Promocion SET nombre = ?, descuento = ?, idProducto = ? WHERE id = ?",
+      [nombre, descuento, idProducto, idPromocion]
+    );
+    if (result.affectedRows === 0) {
+      console.log(result);
+      res.status(404).json({ error: "Promoción no encontrada" });
+    } else {
+      res.json({ mensaje: "Promoción actualizada con éxito" });
+    }
+  } catch (error) {
+    console.error("Error ejecutando la consulta:", error);
+    res.status(500).json({ error: "Error ejecutando la consulta" });
+  }
+});
+
 app.get("/crear", async (req, res) => {
   try {
     const [result] = await pool.query(
