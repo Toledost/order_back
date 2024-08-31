@@ -163,7 +163,7 @@ app.put("/promociones/:idPromocion", async (req, res) => {
   }
 });
 
-/************************** ABMC Productos **********************************/
+/************************** ABMC Locales  **********************************/
 
 // getLocales
 app.get("/locales", async (req, res) => {
