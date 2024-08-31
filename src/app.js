@@ -91,24 +91,23 @@ app.put("/productos/:idProducto", async (req, res) => {
   }
 });
 
-
 /************************** ABMC Promociones **********************************/
 
 //getPromociones
 app.get("/promociones", async (req, res) => {
   try {
     const result = await pool.query(
-    `SELECT promocion.id as id, promocion.nombre as nombre, promocion.descuento as descuento, promocion.idProducto as idProducto, 
+      `SELECT promocion.id as id, promocion.nombre as nombre, promocion.descuento as descuento, promocion.idProducto as idProducto, 
       productos.nombre as nombreProducto, productos.precio as precioProducto FROM Promocion 
       JOIN productos ON Promocion.idProducto = productos.id;`
-    )
+    );
     res.json(result[0]);
-    console.log(result[0])
+    console.log(result[0]);
   } catch (error) {
     console.error("Error ejecutando la consulta:", error);
     res.status(500).json({ error: "Error ejecutando la consulta" });
   }
-})
+});
 
 // addPromocion
 app.post("/promociones", async (req, res) => {
@@ -163,6 +162,42 @@ app.put("/promociones/:idPromocion", async (req, res) => {
     res.status(500).json({ error: "Error ejecutando la consulta" });
   }
 });
+
+/************************** ABMC Productos **********************************/
+
+// getLocales
+app.get("/locales", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT id idLocal, nombre, direccion, capacidad, telefono, horario_apertura horaApertura, horario_cierre horaCierre FROM local;"
+    );
+    res.json(result[0]);
+  } catch (error) {
+    console.error("Error ejecutando la consulta:", error);
+    res.status(500).json({ error: "Error ejecutando la consulta" });
+  }
+});
+
+// addLocales
+app.post("/locales", async (req, res) => {
+  // const { nombre, direccion, telefono, capacidad, horaApertura, horaCierre } =
+  const { nombre, direccion, telefono, capacidad } = req.body;
+  try {
+    const [result] = await pool.query(
+      // "INSERT INTO local (nombre, direccion, telefono, capacidad, horaApertura, horaCierre ) VALUES (?, ?, ?, ?, CAST( ? AS TIME), CAST( ? AS TIME));",
+      // "INSERT INTO local (nombre, direccion, telefono, capacidad, horaApertura, horaCierre ) VALUES (?, ?, ?, ?, ?, ?);",
+      "INSERT INTO local (nombre, direccion, telefono, capacidad ) VALUES (?, ?, ?, ?);",
+      // [nombre, direccion, telefono, capacidad, horaApertura, horaCierre]
+      [nombre, direccion, telefono, capacidad]
+    );
+    res.json(result);
+  } catch (error) {
+    console.error("Error ejecutando la consulta:", error);
+    res.status(500).json({ error: "Error ejecutando la consulta" });
+  }
+});
+// deleteLocales
+// updateLocales
 
 app.get("/crear", async (req, res) => {
   try {
